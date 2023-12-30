@@ -34,5 +34,38 @@ Oracle Linux での各種マニュアル
   ```
   - ![Firewall](./img/Firewall.png)
 
+## Oracle Database インストール
 
+[オラクル・データベース・ソフトウェアのダウンロード](https://www.oracle.com/jp/database/technologies/oracle-database-software-downloads.html#db_ee)
 
+```
+$ sudo dnf -y install oracle-database-preinstall-19c
+$ passwd oracle
+$ sudo dnf -y localinstall ./ダウンロード/oracle-database-ee-19c-1.0-1.x86_64.rpm 
+$ sudo su -
+# /etc/init.d/oracledb_ORCLCDB-19c configure
+
+# vi /etc/bashrc 
+# source /etc/bashrc 
+
+# 設定内容
+umask 022
+export ORACLE_BASE=/opt/oracle
+export ORACLE_HOME=/opt/oracle/product/19c/dbhome_1
+export PATH=$PATH:$ORACLE_HOME/bin
+export ORACLE_SID=ORCLCDB
+export NLS_LANG=Japanese_Japan.AL32UTF8
+
+$ sqlplus / as sysdba
+SQL> STARTUP
+
+# パスワード変更
+SQL> alter user sys identified by oracle;
+SQL> alter user system identified by oracle;
+```
+
+## Oracle Database Client インストール（クライアントだけ必要な場合）
+
+```
+$ sudo dnf -y install oracle-instantclient-release-el9
+```
